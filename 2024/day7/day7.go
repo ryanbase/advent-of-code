@@ -2,13 +2,12 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
-	"regexp"
-	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
@@ -22,7 +21,7 @@ func main() {
 }
 
 func part1(filename string) {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 	f, err := os.Open(filename)
 
 	if err != nil {
@@ -46,8 +45,6 @@ func part1(filename string) {
 			values = append(values, num)
 		}
 
-		stack := []int{}
-		stack = append(stack, values[0])
 		calc := calculate1(values, 1, values[0], expected)
 		if calc {
 			res += expected
@@ -67,7 +64,7 @@ func calculate1(values []int, index int, curr int, expected int) bool {
 }
 
 func part2(filename string) {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 	f, err := os.Open(filename)
 
 	if err != nil {
@@ -91,8 +88,6 @@ func part2(filename string) {
 			values = append(values, num)
 		}
 
-		stack := []int{}
-		stack = append(stack, values[0])
 		calc := calculate2(values, 1, values[0], expected)
 		if calc {
 			res += expected
@@ -111,20 +106,4 @@ func calculate2(values []int, index int, curr int, expected int) bool {
 	concatVal, _ := strconv.Atoi(strconv.Itoa(curr) + strconv.Itoa(values[index]))
 	concat := calculate2(values, index+1, concatVal, expected)
 	return add || mult || concat
-}
-
-func TimeTrack(start time.Time) {
-	elapsed := time.Since(start)
-
-	// Skip this function, and fetch the PC and file for its parent.
-	pc, _, _, _ := runtime.Caller(1)
-
-	// Retrieve a function object this functions parent.
-	funcObj := runtime.FuncForPC(pc)
-
-	// Regex to extract just the function name (and not the module path).
-	runtimeFunc := regexp.MustCompile(`^.*\.(.*)$`)
-	name := runtimeFunc.ReplaceAllString(funcObj.Name(), "$1")
-
-	fmt.Printf("%s completed in %s\n", name, elapsed)
 }

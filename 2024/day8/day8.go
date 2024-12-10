@@ -2,12 +2,11 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
-	"regexp"
-	"runtime"
 	"strconv"
 	"time"
+
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
@@ -21,7 +20,7 @@ func main() {
 }
 
 func readInput(filename string) [][]byte {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 	f, err := os.Open(filename)
 
 	if err != nil {
@@ -63,7 +62,7 @@ func getAntennaMap(input [][]byte) map[byte][][]int {
 }
 
 func part1(input [][]byte) {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 	antinodes := make(map[string]struct{})
 	antennas := getAntennaMap(input)
 
@@ -88,7 +87,7 @@ func part1(input [][]byte) {
 }
 
 func part2(input [][]byte) {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 	antinodes := make(map[string]struct{})
 	antennas := getAntennaMap(input)
 
@@ -125,13 +124,4 @@ func part2(input [][]byte) {
 		}
 	}
 	println(len(antinodes))
-}
-
-func TimeTrack(start time.Time) {
-	elapsed := time.Since(start)
-	pc, _, _, _ := runtime.Caller(1)
-	funcObj := runtime.FuncForPC(pc)
-	runtimeFunc := regexp.MustCompile(`^.*\.(.*)$`)
-	name := runtimeFunc.ReplaceAllString(funcObj.Name(), "$1")
-	fmt.Printf("%s completed in %s\n", name, elapsed)
 }

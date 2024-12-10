@@ -2,13 +2,12 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
-	"regexp"
-	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
@@ -22,7 +21,7 @@ func main() {
 }
 
 func readInput(filename string) []int {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 	f, err := os.Open(filename)
 
 	if err != nil {
@@ -52,7 +51,7 @@ func readInput(filename string) []int {
 }
 
 func part1(disk []int) {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 
 	start := 0
 	end := len(disk) - 1
@@ -75,7 +74,7 @@ func part1(disk []int) {
 }
 
 func part2(disk []int) {
-	defer TimeTrack(time.Now())
+	defer utils.TimeTrack(time.Now())
 
 	end := len(disk) - 1
 	start := end
@@ -139,13 +138,4 @@ func calcChecksum(disk []int) int {
 		checksum += num * i
 	}
 	return checksum
-}
-
-func TimeTrack(start time.Time) {
-	elapsed := time.Since(start)
-	pc, _, _, _ := runtime.Caller(1)
-	funcObj := runtime.FuncForPC(pc)
-	runtimeFunc := regexp.MustCompile(`^.*\.(.*)$`)
-	name := runtimeFunc.ReplaceAllString(funcObj.Name(), "$1")
-	fmt.Printf("%s completed in %s\n", name, elapsed)
 }

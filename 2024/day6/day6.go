@@ -50,10 +50,6 @@ func createKey(i int, j int) string {
 	return strconv.Itoa(i) + "," + strconv.Itoa(j)
 }
 
-func createDirKey(i int, j int, dir rune) string {
-	return strconv.Itoa(i) + "," + strconv.Itoa(j) + "," + string(dir)
-}
-
 // Returns next value or Z if unable
 func getNext(input [][]byte, dir rune, i int, j int) byte {
 	next := byte('Z')
@@ -107,102 +103,6 @@ func part1(input [][]byte, start []int) {
 	println(len(visited))
 }
 
-func repeatPath(input [][]byte, visited map[string]bool, i int, j int, dir rune) bool {
-	if dir == 'N' {
-		i--
-		for i >= 0 && input[i][j] != '#' {
-			if visited[createDirKey(i, j, dir)] {
-				return true
-			}
-			i--
-		}
-	} else if dir == 'E' {
-		j++
-		for j <= len(input[i])-1 && input[i][j] != '#' {
-			if visited[createDirKey(i, j, dir)] {
-				return true
-			}
-			j++
-		}
-	} else if dir == 'S' {
-		i++
-		for i <= len(input)-1 && input[i][j] != '#' {
-			if visited[createDirKey(i, j, dir)] {
-				return true
-			}
-			i++
-		}
-	} else if dir == 'W' {
-		j--
-		for j >= 0 && input[i][j] != '#' {
-			if visited[createDirKey(i, j, dir)] {
-				return true
-			}
-			j--
-		}
-	}
-	return false
-}
-
-func part2(input [][]byte, start []int) {
-	visited := make(map[string]bool)
-	obstructions := make(map[string]bool)
-	i := start[0]
-	j := start[1]
-	dir := 'N'
-	for i >= 0 && i < len(input) && j >= 0 && j < len(input[i]) {
-		next := getNext(input, dir, i, j)
-
-		if next != '#' {
-			if dir == 'N' && repeatPath(input, visited, i, j, 'E') {
-				obstructions[createKey(i-1, j)] = true
-			} else if dir == 'E' && repeatPath(input, visited, i, j, 'S') {
-				obstructions[createKey(i, j+1)] = true
-			} else if dir == 'S' && repeatPath(input, visited, i, j, 'W') {
-				obstructions[createKey(i+1, j)] = true
-			} else if dir == 'W' && repeatPath(input, visited, i, j, 'N') {
-				obstructions[createKey(i, j-1)] = true
-			}
-		}
-
-		visited[createDirKey(i, j, dir)] = true
-
-		if next == 'Z' {
-			break
-		}
-		if next == '.' || next == '^' {
-			if dir == 'N' {
-				i = i - 1
-			} else if dir == 'E' {
-				j = j + 1
-			} else if dir == 'S' {
-				i = i + 1
-			} else if dir == 'W' {
-				j = j - 1
-			}
-		} else if next == '#' {
-			if dir == 'N' {
-				dir = 'E'
-			} else if dir == 'E' {
-				dir = 'S'
-			} else if dir == 'S' {
-				dir = 'W'
-			} else if dir == 'W' {
-				dir = 'N'
-			}
-		}
-	}
-
-	for key := range obstructions {
-		println(key)
-	}
-
-	// for key := range visited {
-	// 	println(key)
-	// }
-
-	println(len(obstructions))
-}
 func isInLoop(input [][]byte, start []int) bool {
 	visited := make(map[string]bool)
 	i := start[0]
