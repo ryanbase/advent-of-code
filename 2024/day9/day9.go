@@ -1,53 +1,16 @@
 package main
 
 import (
-	"bufio"
-	"os"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
+	filename := utils.GetFileNameFromArgument()
 
-	part1(readInput(filename))
-	part2(readInput(filename))
-}
-
-func readInput(filename string) []int {
-	defer utils.TimeTrack(time.Now())
-	f, err := os.Open(filename)
-
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-
-	input := ""
-	for scanner.Scan() {
-		input += scanner.Text()
-	}
-	inputArray := strings.Split(input, "")
-	disk := []int{}
-	for i, val := range inputArray {
-		num, _ := strconv.Atoi(val)
-		for range num {
-			if i%2 == 0 {
-				disk = append(disk, i/2)
-			} else {
-				disk = append(disk, -1)
-			}
-		}
-	}
-	return disk
+	part1(utils.ReadInputAsIntArray(filename))
+	part2(utils.ReadInputAsIntArray(filename))
 }
 
 func part1(disk []int) {

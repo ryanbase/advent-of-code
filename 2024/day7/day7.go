@@ -11,10 +11,7 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
+	filename := utils.GetFileNameFromArgument()
 
 	part1(filename)
 	part2(filename)

@@ -1,38 +1,14 @@
 package main
 
 import (
-	"bufio"
-	"os"
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
-
-	input := readInput(filename)
+	filename := utils.GetFileNameFromArgument()
+	input := utils.ReadInputAsByteMatrix(filename)
 	partOne(input)
 	partTwo(input)
-}
-
-func readInput(filename string) [][]byte {
-	f, err := os.Open(filename)
-
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-
-	input := [][]byte{}
-	for scanner.Scan() {
-		line := scanner.Text()
-		input = append(input, []byte(line))
-	}
-
-	return input
 }
 
 func partOne(input [][]byte) {

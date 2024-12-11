@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bufio"
-	"os"
 	"strconv"
 	"time"
 
@@ -10,31 +8,10 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
-	input := readInput(filename)
+	filename := utils.GetFileNameFromArgument()
+	input := utils.ReadInputAsByteMatrix(filename)
 	part1(input)
 	part2(input)
-}
-
-func readInput(filename string) [][]byte {
-	defer utils.TimeTrack(time.Now())
-	f, err := os.Open(filename)
-
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-
-	input := [][]byte{}
-	for scanner.Scan() {
-		input = append(input, []byte(scanner.Text()))
-	}
-	return input
 }
 
 func createKey(i int, j int) string {

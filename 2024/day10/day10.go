@@ -1,11 +1,7 @@
 package main
 
 import (
-	"bufio"
-	"os"
 	"slices"
-	"strconv"
-	"strings"
 	"time"
 
 	utils "github.com/ryanbase/advent-of-code/2024/utils"
@@ -17,40 +13,11 @@ type location struct {
 }
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
-	input := readInput(filename)
+	filename := utils.GetFileNameFromArgument()
+	input := utils.ReadInputAsIntMatrix(filename)
 	starts := findStarts(input)
 	part1(input, starts)
 	part2(input, starts)
-}
-
-func readInput(filename string) [][]int {
-	defer utils.TimeTrack(time.Now())
-	f, err := os.Open(filename)
-
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-
-	input := [][]int{}
-	for scanner.Scan() {
-		line := scanner.Text()
-		arr := strings.Split(line, "")
-		row := []int{}
-		for _, val := range arr {
-			num, _ := strconv.Atoi(val)
-			row = append(row, num)
-		}
-		input = append(input, row)
-
-	}
-	return input
 }
 
 func findStarts(input [][]int) []location {
