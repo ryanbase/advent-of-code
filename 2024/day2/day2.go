@@ -5,18 +5,17 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
-	partOne(filename)
-	partTwo(filename)
+	filename := utils.GetFileNameFromArgument()
+	part1(filename)
+	part2(filename)
 }
 
-func partOne(filename string) {
+func part1(filename string) {
 	f, err := os.Open(filename)
 
 	if err != nil {
@@ -40,7 +39,7 @@ func partOne(filename string) {
 	println(safeCount)
 }
 
-func partTwo(filename string) {
+func part2(filename string) {
 	f, err := os.Open(filename)
 
 	if err != nil {

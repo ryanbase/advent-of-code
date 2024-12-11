@@ -12,7 +12,6 @@ import (
 
 func main() {
 	filename := utils.GetFileNameFromArgument()
-
 	part1(filename)
 	part2(filename)
 }

@@ -7,11 +7,11 @@ import (
 func main() {
 	filename := utils.GetFileNameFromArgument()
 	input := utils.ReadInputAsByteMatrix(filename)
-	partOne(input)
-	partTwo(input)
+	part1(input)
+	part2(input)
 }
 
-func partOne(input [][]byte) {
+func part1(input [][]byte) {
 	count := 0
 
 	for i, line := range input {
@@ -79,7 +79,7 @@ func partOne(input [][]byte) {
 	println(count)
 }
 
-func partTwo(input [][]byte) {
+func part2(input [][]byte) {
 	count := 0
 
 	for i, line := range input {

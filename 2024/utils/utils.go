@@ -18,6 +18,24 @@ func GetFileNameFromArgument() string {
 	return os.Args[1]
 }
 
+func ReadInputAsString(filename string) string {
+	f, err := os.Open(filename)
+
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+
+	input := ""
+	for scanner.Scan() {
+		line := scanner.Text()
+		input += line
+	}
+	return input
+}
+
 func ReadInputAsByteMatrix(filename string) [][]byte {
 	defer TimeTrack(time.Now())
 	f, err := os.Open(filename)

@@ -10,7 +10,6 @@ import (
 
 func main() {
 	filename := utils.GetFileNameFromArgument()
-
 	input, start := readInput(filename)
 	part1(input, start)
 	part2BruteForce(input, start)

@@ -6,15 +6,20 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"time"
+
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
-	partOne()
-	partTwo()
+	filename := utils.GetFileNameFromArgument()
+	part1(filename)
+	part2(filename)
 }
 
-func partOne() {
-	f, err := os.Open("input.txt")
+func part1(filename string) {
+	defer utils.TimeTrack(time.Now())
+	f, err := os.Open(filename)
 
 	if err != nil {
 		panic(err)
@@ -64,8 +69,9 @@ func partOne() {
 	println(sum)
 }
 
-func partTwo() {
-	f, err := os.Open("input.txt")
+func part2(filename string) {
+	defer utils.TimeTrack(time.Now())
+	f, err := os.Open(filename)
 
 	if err != nil {
 		panic(err)

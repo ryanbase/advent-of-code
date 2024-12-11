@@ -6,17 +6,16 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
+	filename := utils.GetFileNameFromArgument()
 
 	orders, updates := readInput(filename)
-	partOne(orders, updates)
-	partTwo(orders, updates)
+	part1(orders, updates)
+	part2(orders, updates)
 }
 
 func readInput(filename string) (map[string][]string, [][]string) {
@@ -58,7 +57,7 @@ func readInput(filename string) (map[string][]string, [][]string) {
 	return orders, updates
 }
 
-func partOne(orders map[string][]string, updates [][]string) {
+func part1(orders map[string][]string, updates [][]string) {
 	result := 0
 	for _, update := range updates {
 		if isOrdered(orders, update) == -1 {
@@ -69,7 +68,7 @@ func partOne(orders map[string][]string, updates [][]string) {
 	println(result)
 }
 
-func partTwo(orders map[string][]string, updates [][]string) {
+func part2(orders map[string][]string, updates [][]string) {
 	unordered := [][]string{}
 	for _, update := range updates {
 		if isOrdered(orders, update) > -1 {

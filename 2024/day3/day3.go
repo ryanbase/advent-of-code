@@ -1,43 +1,21 @@
 package main
 
 import (
-	"bufio"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/ryanbase/advent-of-code/2024/utils"
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		panic("No file name provided")
-	}
-	filename := os.Args[1]
-	input := readInput(filename)
-
-	partOne(input)
-	partTwo(input)
+	filename := utils.GetFileNameFromArgument()
+	input := utils.ReadInputAsString(filename)
+	part1(input)
+	part2(input)
 }
 
-func readInput(filename string) string {
-	f, err := os.Open(filename)
-
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-
-	input := ""
-	for scanner.Scan() {
-		line := scanner.Text()
-		input += line
-	}
-	return input
-}
-
-func partOne(input string) {
+func part1(input string) {
 	regex, _ := regexp.Compile("mul\\(\\d+,\\d+\\)")
 	matches := regex.FindAllStringIndex(input, -1)
 
@@ -52,7 +30,7 @@ func partOne(input string) {
 	println(result)
 }
 
-func partTwo(input string) {
+func part2(input string) {
 	regex, _ := regexp.Compile("don't\\(\\)|do\\(\\)|mul\\(\\d+,\\d+\\)")
 	matches := regex.FindAllStringIndex(input, -1)
 	do := true
