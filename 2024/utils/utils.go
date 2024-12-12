@@ -19,6 +19,7 @@ func GetFileNameFromArgument() string {
 }
 
 func ReadInputAsString(filename string) string {
+	defer TimeTrack(time.Now())
 	f, err := os.Open(filename)
 
 	if err != nil {
