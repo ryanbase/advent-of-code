@@ -22,7 +22,7 @@ func main() {
 	input := utils.ReadInputAsByteMatrix(filename)
 	regions := getRegions(input)
 	part1(regions)
-	// part2(regions)
+	// part2(input, regions)
 }
 
 func part1(regions []region) {
@@ -35,11 +35,16 @@ func part1(regions []region) {
 }
 
 // Part 2 not complete
-func part2(regions []region) {
+func part2(input [][]byte, regions []region) {
 	defer utils.TimeTrack(time.Now())
 	price := 0
 	for _, region := range regions {
-		// Find new perimiters
+		// TODO Find new perimiters
+		// for i,row := range input {
+		// 	for j, val := range row {
+
+		// 	}
+		// }
 		price += len(region.plots) * region.perimiter
 	}
 	println(price)
