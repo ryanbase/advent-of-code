@@ -30,6 +30,7 @@ func main() {
 	filename := utils.GetFileNameFromArgument()
 	machines := readInput(filename)
 	part1(machines)
+	part2(machines)
 }
 
 func readInput(filename string) []machine {
@@ -76,6 +77,17 @@ func part1(machines []machine) {
 	defer utils.TimeTrack(time.Now())
 	tokens := 0
 	for _, machine := range machines {
+		tokens += calcMinTokens(machine)
+	}
+	println(tokens)
+}
+
+func part2(machines []machine) {
+	defer utils.TimeTrack(time.Now())
+	tokens := 0
+	for _, machine := range machines {
+		machine.prizeX += 10000000000000
+		machine.prizeY += 10000000000000
 		tokens += calcMinTokens(machine)
 	}
 	println(tokens)
