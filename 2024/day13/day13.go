@@ -19,12 +19,6 @@ type machine struct {
 	prizeY int
 }
 
-type cacheval struct {
-	x          int
-	y          int
-	currTokens int
-}
-
 func main() {
 	defer utils.TimeTrack(time.Now())
 	filename := utils.GetFileNameFromArgument()
