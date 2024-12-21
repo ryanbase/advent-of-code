@@ -77,9 +77,9 @@ func part2(robots []robot) {
 	seconds := min[0]
 
 	grid := [][]byte{}
-	for _ = range HEIGHT {
+	for range HEIGHT {
 		row := []byte{}
-		for _ = range WIDTH {
+		for range WIDTH {
 			row = append(row, '.')
 		}
 		grid = append(grid, row)
