@@ -2,16 +2,14 @@ import { readFileFromArgs } from "../../utils/read-file";
 
 const input = await readFileFromArgs();
 
-const grid = input.split("\n");
+const grid = input.split("\n").map((row) => row.split(""));
 
-const gridArray = grid.map((row) => row.split(""));
-
-console.log(gridArray);
-
-function checkDirections(grid: string[], i: number, j: number) {
-  if (grid[i]?.charAt(j) !== "@") {
+function checkDirections(grid: string[][], i: number, j: number) {
+  const row = grid[i];
+  if (!row || row[j] !== "@") {
     return 0;
   }
+
   const dirs = [
     [-1, -1],
     [-1, 0],
@@ -26,7 +24,11 @@ function checkDirections(grid: string[], i: number, j: number) {
   dirs.forEach((dir) => {
     const i1 = dir[0]!;
     const j1 = dir[1]!;
-    if (grid[i + i1]?.charAt(j + j1) === "@") {
+    const row = grid[i + i1];
+    if (!row) {
+      return;
+    }
+    if (row[j + j1] === "@") {
       count++;
     }
     if (count > 3) {
@@ -55,26 +57,17 @@ function part2() {
   while (found) {
     found = false;
 
-    for (let i = 0; i < gridArray.length; i++) {
-      for (let j = 0; j < gridArray[i]!.length; j++) {
-        // const removed = checkDirections(gridArray, i)
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[i]!.length; j++) {
+        const removed = checkDirections(grid, i, j);
+        if (removed === 0) {
+          continue;
+        }
+        result++;
+        found = true;
+        grid[i]![j] = ".";
       }
     }
-
-    // grid.forEach((row, i) => {
-    //   for (let j = 0; j < row.length; j++) {
-    //     const removed = checkDirections(grid, i, j);
-    //     if (removed === 1) {
-    //       result++;
-    //       found = true;
-    //       const array = row.split("");
-
-    //       array[j] = ".";
-    //       grid[i] = array.join();
-    //       row = array.join();
-    //     }
-    //   }
-    // });
   }
 
   return result;
