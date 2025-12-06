@@ -14,12 +14,7 @@ export const readFile = async (filePath: string) => {
 export const readFileFromArgs = async () => {
   const args = getArgs();
 
-  const filePath = args.file;
-
-  if (!filePath) {
-    console.error("Must provide a file path");
-    process.exit(1);
-  }
+  const filePath = args.file ?? args.test ? "test.txt" : "input.txt";
 
   return await readFile(filePath);
 };

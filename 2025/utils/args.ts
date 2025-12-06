@@ -7,6 +7,9 @@ export const getArgs = () => {
       file: {
         type: "string",
       },
+      test: {
+        type: "boolean",
+      },
     },
     strict: true,
     allowPositionals: true,
