@@ -42,9 +42,9 @@ function part1() {
   let result = 0;
 
   grid.forEach((row, i) => {
-    for (let j = 0; j < row.length; j++) {
+    row.forEach((_, j) => {
       result += checkDirections(grid, i, j);
-    }
+    });
   });
 
   return result;
@@ -59,8 +59,7 @@ function part2() {
 
     for (let i = 0; i < grid.length; i++) {
       for (let j = 0; j < grid[i]!.length; j++) {
-        const removed = checkDirections(grid, i, j);
-        if (removed === 0) {
+        if (checkDirections(grid, i, j) === 0) {
           continue;
         }
         result++;
