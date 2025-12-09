@@ -1,12 +1,6 @@
 import { readFileFromArgs } from "../../utils/read-file";
 
 const input = await readFileFromArgs();
-
-type Point = {
-  row: number;
-  col: number;
-};
-
 const rows = input.split("\n").map((row) => row.split(""));
 
 function part1() {

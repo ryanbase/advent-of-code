@@ -1,5 +1,10 @@
 import { getArgs } from "./args";
 
+export const getFileName = () => {
+  const { file, test } = getArgs();
+  return file ?? test ? "test.txt" : "input.txt";
+};
+
 export const readFile = async (filePath: string) => {
   try {
     const file = Bun.file(filePath);
@@ -12,9 +17,5 @@ export const readFile = async (filePath: string) => {
 };
 
 export const readFileFromArgs = async () => {
-  const args = getArgs();
-
-  const filePath = args.file ?? args.test ? "test.txt" : "input.txt";
-
-  return await readFile(filePath);
+  return await readFile(getFileName());
 };
