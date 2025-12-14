@@ -14,6 +14,8 @@ input.split("\n").forEach((device) => {
   devices[name!] = { name: name!, next: next!.split(" ") };
 });
 
+const memo = new Map<string, number>();
+
 function findPaths(device: Device, count: number) {
   if (count > Object.keys(devices).length) {
     return 0;
@@ -28,21 +30,39 @@ function findPaths(device: Device, count: number) {
   return result;
 }
 
-function findPaths2(device: Device, count: number, visited: string[]) {
+// I did use Cursor to figure out how to make this function more performant, which is
+// where the idea for the memo came from.
+function findPaths2(device: Device, count: number, visited: Set<string>) {
   if (count > Object.keys(devices).length) {
     return 0;
   }
-  if (device.next[0] === "out") {
-    return visited.length >= 2 ? 1 : 0;
+
+  const hasDac = visited.has("dac") ? "1" : "0";
+  const hasFft = visited.has("fft") ? "1" : "0";
+  const memoKey = `${device.name}:${hasDac}:${hasFft}:${visited.size}`;
+
+  if (memo.has(memoKey)) {
+    return memo.get(memoKey)!;
   }
-  if (device.name === "dac" || device.name === "fft") {
-    visited.push(device.name);
+
+  if (device.next.includes("out")) {
+    const result = visited.has("dac") && visited.has("fft") ? 1 : 0;
+    memo.set(memoKey, result);
+    return result;
   }
-  console.log(device.name, count, visited);
+
+  const newVisited = new Set(visited);
+  newVisited.add(device.name);
+
   let result = 0;
-  for (let i = 0; i < device.next.length; i++) {
-    result += findPaths2(devices[device.next[i]!]!, count + 1, [...visited]);
+  device.next.forEach(
+    (next) => (result += findPaths2(devices[next]!, count + 1, newVisited))
+  );
+
+  if (visited.size < 50) {
+    memo.set(memoKey, result);
   }
+
   return result;
 }
 
@@ -51,7 +71,7 @@ function part1() {
 }
 
 function part2() {
-  return findPaths2(devices["svr"]!, 0, []);
+  return findPaths2(devices["svr"]!, 0, new Set());
 }
 
 // console.log(part1());
