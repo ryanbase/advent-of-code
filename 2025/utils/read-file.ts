@@ -2,7 +2,7 @@ import { getArgs } from "./args";
 
 export const getFileName = () => {
   const { file, test } = getArgs();
-  return file ?? test ? "test.txt" : "input.txt";
+  return file ? file : test ? "test.txt" : "input.txt";
 };
 
 export const readFile = async (filePath: string) => {

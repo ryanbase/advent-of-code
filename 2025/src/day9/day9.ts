@@ -1,4 +1,4 @@
-import { getFileName, readFileFromArgs } from "../../utils/read-file";
+import { readFileFromArgs } from "../../utils/read-file";
 
 const input = await readFileFromArgs();
 
